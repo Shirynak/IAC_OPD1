@@ -3,9 +3,9 @@
     <!-- Element hier ApplicationError -->
     <xs:element name="ApplicationError">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element name="error" type="xs:string"/>
-            </xs:sequence>
+        	<xs:sequence>
+        		<xs:element name="error" type="xs:string"/>
+        	</xs:sequence>
         </xs:complexType>
-    </xs:element>
+	</xs:element>
 </xs:schema>
