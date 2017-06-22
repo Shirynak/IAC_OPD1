@@ -38,7 +38,10 @@
   </dependencies>
   <build>
     <sourceDirectory>src/main/java/</sourceDirectory>
+    
     <finalName>IAC_OPD1</finalName>
+    
+    
     <plugins>
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
@@ -63,7 +66,7 @@
       	<artifactId>maven-war-plugin</artifactId>
         <version>3.0.0</version>
         <configuration>
-        	<outputDirectory>webs</outputDirectory>
+        	<outputDirectory>web</outputDirectory>
             <failOnMissingWebXml>true</failOnMissingWebXml>
         </configuration>
       </plugin>
