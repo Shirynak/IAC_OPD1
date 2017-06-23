@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="http://eliaskarimi/response">
+           
+    <xs:annotation>
+		<xs:documentation xml:lang="nl">
+			De resonse .xsd. We returnen een result element met daarin een sequence 
+			van totaal females, males, en totale bevolking dat jaar.
+			
+			Beide elementen mogen ook minimaal en maximaal 1 keer voorkomen.
+		</xs:documentation>
+	</xs:annotation>
+	
 	<!-- Define het element, hier response, zodat het gevonden kan worden in het wsdl -->
     <xs:element name="response">
         <xs:complexType>
             <xs:sequence>
-            	<xs:element name="result" type="xs:string"/>
+            	<xs:element name="result">
+            		<xs:complexType>
+           				<xs:sequence>
+            				<xs:element name="female" type="xs:int" />
+            				<xs:element name="male" type="xs:int"/>
+            				<xs:element name="total" type="xs:int"/>
+            			</xs:sequence>
+            		</xs:complexType>
+            	</xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

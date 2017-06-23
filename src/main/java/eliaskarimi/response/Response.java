@@ -18,7 +18,19 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="result" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="result">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *                 &lt;sequence>
+ *                   &lt;element name="female" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *                   &lt;element name="male" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *                   &lt;element name="total" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *                 &lt;/sequence>
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -35,17 +47,17 @@ import javax.xml.bind.annotation.XmlType;
 public class Response {
 
     @XmlElement(required = true)
-    protected String result;
+    protected Response.Result result;
 
     /**
      * Gets the value of the result property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Response.Result }
      *     
      */
-    public String getResult() {
+    public Response.Result getResult() {
         return result;
     }
 
@@ -54,11 +66,95 @@ public class Response {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Response.Result }
      *     
      */
-    public void setResult(String value) {
+    public void setResult(Response.Result value) {
         this.result = value;
+    }
+
+
+    /**
+     * <p>Java class for anonymous complex type.
+     * 
+     * <p>The following schema fragment specifies the expected content contained within this class.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *       &lt;sequence>
+     *         &lt;element name="female" type="{http://www.w3.org/2001/XMLSchema}int"/>
+     *         &lt;element name="male" type="{http://www.w3.org/2001/XMLSchema}int"/>
+     *         &lt;element name="total" type="{http://www.w3.org/2001/XMLSchema}int"/>
+     *       &lt;/sequence>
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+        "female",
+        "male",
+        "total"
+    })
+    public static class Result {
+
+        protected int female;
+        protected int male;
+        protected int total;
+
+        /**
+         * Gets the value of the female property.
+         * 
+         */
+        public int getFemale() {
+            return female;
+        }
+
+        /**
+         * Sets the value of the female property.
+         * 
+         */
+        public void setFemale(int value) {
+            this.female = value;
+        }
+
+        /**
+         * Gets the value of the male property.
+         * 
+         */
+        public int getMale() {
+            return male;
+        }
+
+        /**
+         * Sets the value of the male property.
+         * 
+         */
+        public void setMale(int value) {
+            this.male = value;
+        }
+
+        /**
+         * Gets the value of the total property.
+         * 
+         */
+        public int getTotal() {
+            return total;
+        }
+
+        /**
+         * Sets the value of the total property.
+         * 
+         */
+        public void setTotal(int value) {
+            this.total = value;
+        }
+
     }
 
 }

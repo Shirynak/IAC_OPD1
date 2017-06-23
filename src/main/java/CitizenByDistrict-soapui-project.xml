@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="fa2ba0ac-fb05-44aa-88fc-e9eae7211b02" activeEnvironment="Default" name="CitizenByDistrict" resourceRoot="${projectDir}" soapui-version="5.3.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="f9580bbd-3727-497a-8ca0-a26d7b522142" wsaVersion="NONE" name="WS-Binding" type="wsdl" bindingName="{http://eliaskarimi/}WS-Binding" soapVersion="1_1" anonymous="optional" definition="CitizenByDistrict.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/marc/Documents/workspace_eclipse/IAC_OPD1/src/main/java/CitizenByDistrict.wsdl"><con:part><con:url>file:/Users/marc/Documents/workspace_eclipse/IAC_OPD1/src/main/java/CitizenByDistrict.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://eliaskarimi/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:req="http://eliaskarimi/request" xmlns:rsp="http://eliaskarimi/response" xmlns:flt="http://eliaskarimi/error" xmlns="http://eliaskarimi/">
+  <!--Vervolgens vul ik de 5 hoofdbestandelen van het wsdl document in: types, messages, porTypes, bindings en services-->
+  <!--Types section declareert een xsd:schema-->
+  <wsdl:types>
+    <xsd:schema>
+      <!--Hier importeren we de schema's-->
+      <xsd:import namespace="http://eliaskarimi/request" schemaLocation="request.xsd"/>
+      <xsd:import namespace="http://eliaskarimi/response" schemaLocation="response.xsd"/>
+      <xsd:import namespace="http://eliaskarimi/error" schemaLocation="error.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <!--Messages zijn de berichten die ontvangen of verstuurd kunnen worden vanuit de service voor request, response en error-->
+  <wsdl:message name="request">
+    <wsdl:part name="parameters" element="req:request"/>
+  </wsdl:message>
+  <wsdl:message name="response">
+    <wsdl:part name="response" element="rsp:response"/>
+  </wsdl:message>
+  <wsdl:message name="ApplicationError">
+    <wsdl:part name="ApplicationError" element="flt:ApplicationError"/>
+  </wsdl:message>
+  <!--Hier definieer ik de operations van de webservice-->
+  <wsdl:portType name="WS-Interface">
+    <wsdl:operation name="PopulationCountryByYear">
+      <wsdl:input message="request"/>
+      <wsdl:output message="response"/>
+      <wsdl:fault name="ApplicationError" message="ApplicationError"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <!--De implementatie van de operations hierboven, gebruiken voor style en use altijd document en literal-->
+  <wsdl:binding name="WS-Binding" type="WS-Interface">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="PopulationCountryByYear">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ApplicationError">
+        <soap:fault name="ApplicationError" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="eliaskarimi.SoapService">
+    <wsdl:port name="WS-Port" binding="WS-Binding">
+      <soap:address location="http://localhost:8080/soap/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/marc/Documents/workspace_eclipse/IAC_OPD1/src/main/java/request.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://eliaskarimi/request" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!--Element hier request-->
+  <xs:element name="request">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="country" type="xs:string"/>
+        <xs:element name="year" type="xs:int"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/marc/Documents/workspace_eclipse/IAC_OPD1/src/main/java/response.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://eliaskarimi/response" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="nl">De resonse .xsd. We returnen een result element met daarin een sequence 
+			van totaal females, males, en totale bevolking dat jaar.
+			
+			Beide elementen mogen ook minimaal en maximaal 1 keer voorkomen.</xs:documentation>
+  </xs:annotation>
+  <!--Define het element, hier response, zodat het gevonden kan worden in het wsdl-->
+  <xs:element name="response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="result">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="female" type="xs:int"/>
+              <xs:element name="male" type="xs:int"/>
+              <xs:element name="total" type="xs:int"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/marc/Documents/workspace_eclipse/IAC_OPD1/src/main/java/error.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://eliaskarimi/error" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!--Element hier ApplicationError-->
+  <xs:element name="ApplicationError">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="error" type="xs:string"/>
+        <!--<xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1" />-->
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/soap/</con:endpoint></con:endpoints><con:operation id="1365a2b9-14ca-427f-bd1f-12f2df0af374" isOneWay="false" action="" name="PopulationCountryByYear" bindingOperationName="PopulationCountryByYear" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="29f3bbc8-c57d-4651-ba2f-042031e273ea" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://eliaskarimi/request">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <req:request>
+         <country>Brazil</country>
+         <year>2131</year>
+      </req:request>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://eliaskarimi/WS-Interface/PopulationCountryByYearRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="8577ba2d-3321-4824-807f-3bdc01bf5a44" name="WS-Binding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="d7cf60fe-0ed8-480b-a991-54ab3efe04b8" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Tests" searchProperties="true"><con:settings/><con:testStep type="request" id="7a827f87-b97d-4fe2-84b7-23fe79b3b85e" name="PopulationCountryByYear"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WS-Binding</con:interface><con:operation>PopulationCountryByYear</con:operation><con:request name="PopulationCountryByYear" id="1233d38e-1cbb-4518-be5c-e58259e2a69e"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://eliaskarimi/request">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <req:request>
+         <country>Brazil</country>
+         <year>1950</year>
+      </req:request>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://eliaskarimi/WS-Interface/PopulationCountryByYearRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="SMOKE_01" id="493e8cda-c573-4157-9231-2f59d3bb583c"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WS-Binding</con:interface><con:operation>PopulationCountryByYear</con:operation><con:request name="SMOKE_01" id="7b81970f-94a5-4e93-9400-4a7011f5e3e1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://eliaskarimi/request">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <req:request>
+         <country>Brazil</country>
+         <year>2000</year>
+      </req:request>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="95a8856f-2834-4c4c-aee7-f6d89fc4356e"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="SMOKE_02" id="b1c8b209-f0f7-48af-be54-3d810f51be27"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WS-Binding</con:interface><con:operation>PopulationCountryByYear</con:operation><con:request name="SMOKE_02" id="99616776-1f56-4c98-b1bb-52a8a55f08d3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://eliaskarimi/request">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <req:request>
+         <country>Brazil</country>
+         <year>1950</year>
+      </req:request>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="6efd10a2-4da5-4cc8-8f39-a1411c14037a"/><con:assertion type="Schema Compliance" id="c9d4296c-f8b9-4fd3-b605-3da9d444d619"><con:configuration/></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="SMOKE_03" id="3c0b5095-5fe6-4a90-966c-d09f45dc85f4"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WS-Binding</con:interface><con:operation>PopulationCountryByYear</con:operation><con:request name="SMOKE_03" id="5d49fa0b-8933-4eaa-a160-da95d79c12c3"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://eliaskarimi/request">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <req:request>
+         <country>Brazil</country>
+         <year>1970</year>
+      </req:request>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="f691be77-43c3-4040-9d43-f68ee6b7f0cf"/><con:assertion type="Schema Compliance" id="badc7699-da3a-4729-a9aa-3df2a157947b"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" id="409b3517-ad88-413b-9907-87f0d4a1be9c"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="BLACK_01" id="791e3458-3ab6-4eed-80ca-ae8817ee6e07"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WS-Binding</con:interface><con:operation>PopulationCountryByYear</con:operation><con:request name="BLACK_01" id="d3392e77-512e-4f8f-9d8a-d34810ed15c7"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://eliaskarimi/request">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <req:request>
+         <country>The Netherlands</country>
+         <year>2001</year>
+      </req:request>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="9bd2d4d4-f738-4041-b8fb-adbff9c0d0c9"/><con:assertion type="Schema Compliance" id="9266c3c5-1367-4ddd-82d3-fce248279791"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" id="fc727538-25d4-4f08-baaf-55bb6b43ec4a"/><con:assertion type="Simple Contains" id="c3c680f3-b14e-4447-ac7c-c218e7b539bc" name="Contains"><con:configuration><token><![CDATA[<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+   <S:Body>
+      <ns2:response xmlns:ns2="http://eliaskarimi/response" xmlns:ns3="http://eliaskarimi/error" xmlns:ns4="http://eliaskarimi/request">
+         <result>
+            <female>8075895</female>
+            <male>7908470</male>
+            <total>15984365</total>
+         </result>
+      </ns2:response>
+   </S:Body>
+</S:Envelope>]]></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="BLACK_02" id="7f01737b-d863-4f30-b8e4-9255b64720c5"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WS-Binding</con:interface><con:operation>PopulationCountryByYear</con:operation><con:request name="BLACK_02" id="93cf3ad3-19f0-4075-a526-3180ea1ff5fa"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://eliaskarimi/request">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <req:request>
+         <country>Brazil</country>
+         <year>1950</year>
+      </req:request>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="63e7d7a8-a683-4f37-ad6b-846f0afeb897"/><con:assertion type="Schema Compliance" id="4b376e33-9e8b-429b-a587-cfca66cacaf4"><con:configuration/></con:assertion><con:assertion type="SOAP Fault Assertion" id="cc93d3d8-d75b-4f80-9661-c9c349752e47"/><con:assertion type="Simple Contains" id="68ff21b9-7c76-4e9b-9dc8-7297bc1f3253" name="Contains"><con:configuration><token><![CDATA[<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+   <S:Body>
+      <ns2:response xmlns:ns2="http://eliaskarimi/response" xmlns:ns3="http://eliaskarimi/error" xmlns:ns4="http://eliaskarimi/request">
+         <result>
+            <female>27172815</female>
+            <male>26775989</male>
+            <total>53948804</total>
+         </result>
+      </ns2:response>
+   </S:Body>
+</S:Envelope>]]></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="BLACK_03" id="0e0d010b-051a-43a9-8fa7-a66c5b8d63be"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WS-Binding</con:interface><con:operation>PopulationCountryByYear</con:operation><con:request name="BLACK_03" id="e6adfc7e-bb19-4340-8896-49cefc4f8683"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://eliaskarimi/request">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <req:request>
+         <country>Brazil</country>
+         <year>1550</year>
+      </req:request>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="9d4d229b-6075-4943-bafa-21b8bdcd617a"/><con:assertion type="Schema Compliance" id="a8f4e76f-6815-4d39-bee0-08d61fc1f353"><con:configuration/></con:assertion><con:assertion type="Simple Contains" id="67746d6e-c099-4b69-9337-794365d1e121" name="Contains"><con:configuration><token><![CDATA[<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+   <S:Body>
+      <S:Fault xmlns:ns4="http://www.w3.org/2003/05/soap-envelope">
+         <faultcode>S:Server</faultcode>
+         <faultstring>Het jaartal valt niet binnen de minimale en maximale range</faultstring>
+      </S:Fault>
+   </S:Body>
+</S:Envelope>]]></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:testStep type="request" name="BLACK_04" id="4d8a2152-7a93-4d11-9bb8-51f14511d821"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>WS-Binding</con:interface><con:operation>PopulationCountryByYear</con:operation><con:request name="BLACK_04" id="4af78fa1-314f-4671-a87d-5dd409b699e5"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://eliaskarimi/request">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <req:request>
+        <country>Het land van ooit</country>
+	   <year>2001</year>
+      </req:request>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="11b899bb-476b-4b20-bd2f-bf1265833572"/><con:assertion type="Schema Compliance" id="63fa9eaa-ddca-4337-93d0-749cddbd1aab"><con:configuration/></con:assertion><con:assertion type="Simple Contains" id="69d91dea-2b53-4041-87a6-9216026e6523" name="Contains"><con:configuration><token><![CDATA[<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+   <S:Body>
+      <S:Fault xmlns:ns4="http://www.w3.org/2003/05/soap-envelope">
+         <faultcode>S:Server</faultcode>
+         <faultstring>Het opgegeven land bestaat niet</faultstring>
+      </S:Fault>
+   </S:Body>
+</S:Envelope>]]></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

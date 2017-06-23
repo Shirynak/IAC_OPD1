@@ -37,4 +37,12 @@ public class ObjectFactory {
         return new Response();
     }
 
+    /**
+     * Create an instance of {@link Response.Result }
+     * 
+     */
+    public Response.Result createResponseResult() {
+        return new Response.Result();
+    }
+
 }

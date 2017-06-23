@@ -22,8 +22,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="year">
  *           &lt;simpleType>
  *             &lt;restriction base="{http://www.w3.org/2001/XMLSchema}integer">
- *               &lt;minInclusive value="0"/>
- *               &lt;maxInclusive value="2017"/>
+ *               &lt;minInclusive value="1950"/>
+ *               &lt;maxInclusive value="2100"/>
  *             &lt;/restriction>
  *           &lt;/simpleType>
  *         &lt;/element>

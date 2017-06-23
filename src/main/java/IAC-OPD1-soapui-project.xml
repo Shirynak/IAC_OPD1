@@ -1,2 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project id="f8a721cf-06c1-4659-8ff8-0023e77b353a" activeEnvironment="Default" name="IAC_OPD1" resourceRoot="" soapui-version="5.3.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
+<con:soapui-project id="60e9f021-d3dd-40b5-b8b2-8cc057950bf9" activeEnvironment="Default" name="IAC_OPD1" resourceRoot="${projectDir}" soapui-version="5.3.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="0963245a-bbdb-4020-88b9-846b8203ad14" wsaVersion="NONE" name="WS-Binding" type="wsdl" bindingName="{http://eliaskarimi/}WS-Binding" soapVersion="1_1" anonymous="optional" definition="CitizenByDistrict.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/marc/Documents/workspace_eclipse/IAC_OPD1/src/main/java/CitizenByDistrict.wsdl"><con:part><con:url>file:/Users/marc/Documents/workspace_eclipse/IAC_OPD1/src/main/java/CitizenByDistrict.wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://eliaskarimi/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:req="http://eliaskarimi/request" xmlns:rsp="http://eliaskarimi/response" xmlns:flt="http://eliaskarimi/error" xmlns="http://eliaskarimi/">
+  <!--Vervolgens vul ik de 5 hoofdbestandelen van het wsdl document in: types, messages, porTypes, bindings en services-->
+  <!--Types section declareert een xsd:schema-->
+  <wsdl:types>
+    <xsd:schema>
+      <!--Hier importeren we de schema's-->
+      <xsd:import namespace="http://eliaskarimi/request" schemaLocation="request.xsd"/>
+      <xsd:import namespace="http://eliaskarimi/response" schemaLocation="response.xsd"/>
+      <xsd:import namespace="http://eliaskarimi/error" schemaLocation="error.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <!--Messages zijn de berichten die ontvangen of verstuurd kunnen worden vanuit de service voor request, response en error-->
+  <wsdl:message name="request">
+    <wsdl:part name="parameters" element="req:request"/>
+  </wsdl:message>
+  <wsdl:message name="response">
+    <wsdl:part name="response" element="rsp:response"/>
+  </wsdl:message>
+  <wsdl:message name="ApplicationError">
+    <wsdl:part name="ApplicationError" element="flt:ApplicationError"/>
+  </wsdl:message>
+  <!--Hier definieer ik de operations van de webservice-->
+  <wsdl:portType name="WS-Interface">
+    <wsdl:operation name="PopulationCountryByYear">
+      <wsdl:input message="request"/>
+      <wsdl:output message="response"/>
+      <wsdl:fault name="ApplicationError" message="ApplicationError"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <!--De implementatie van de operations hierboven, gebruiken voor style en use altijd document en literal-->
+  <wsdl:binding name="WS-Binding" type="WS-Interface">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="PopulationCountryByYear">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ApplicationError">
+        <soap:fault name="ApplicationError" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="eliaskarimi.SoapService">
+    <wsdl:port name="WS-Port" binding="WS-Binding">
+      <soap:address location="http://localhost:8080/soap/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>file:/Users/marc/Documents/workspace_eclipse/IAC_OPD1/src/main/java/request.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://eliaskarimi/request" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="nl">De request .xsd. De client moet een country opgeven in string, en de jaar.
+			Omdat de onderstuende api van population.io waardes accepteerd tussen de 1950 en 2100,
+			zet ik deze als minimale en maximale waarde.
+			
+			Beide elementen mogen ook minimaal en maximaal 1 keer voorkomen.</xs:documentation>
+  </xs:annotation>
+  <!--Element hier request-->
+  <xs:element name="request">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="country" type="xs:string" minOccurs="1" maxOccurs="1"/>
+        <xs:element name="year" minOccurs="1" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:integer">
+              <xs:minInclusive value="1950"/>
+              <xs:maxInclusive value="2100"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/marc/Documents/workspace_eclipse/IAC_OPD1/src/main/java/response.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://eliaskarimi/response" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="nl">De resonse .xsd. We returnen een result element met daarin een sequence 
+			van totaal females, males, en totale bevolking dat jaar.
+			
+			Beide elementen mogen ook minimaal en maximaal 1 keer voorkomen.</xs:documentation>
+  </xs:annotation>
+  <!--Define het element, hier response, zodat het gevonden kan worden in het wsdl-->
+  <xs:element name="response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="result">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="female" type="xs:int"/>
+              <xs:element name="male" type="xs:int"/>
+              <xs:element name="total" type="xs:int"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>file:/Users/marc/Documents/workspace_eclipse/IAC_OPD1/src/main/java/error.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://eliaskarimi/error" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!--Element hier ApplicationError-->
+  <xs:element name="ApplicationError">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="error" type="xs:string"/>
+        <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/soap/</con:endpoint></con:endpoints><con:operation id="7a023553-4d5d-46b4-9612-379a7859d019" isOneWay="false" action="" name="PopulationCountryByYear" bindingOperationName="PopulationCountryByYear" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2cdc23ff-55b9-4432-8a2f-9ec1a3e60ef5" name="Request_Land_Jaartal"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:req="http://eliaskarimi/request">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <req:request>
+         <country>Brazil</country>
+         <year>1950</year>
+      </req:request>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://eliaskarimi/WS-Interface/PopulationCountryByYearRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

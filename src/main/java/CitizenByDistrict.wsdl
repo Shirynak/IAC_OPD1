@@ -21,7 +21,7 @@
   </wsdl:types>
   
   
- <!--  Messages zijn de berichten die ontvangen of verstuurd kunnen worden vanuit de service voor request, response en error-->
+  <!--  Messages zijn de berichten die ontvangen of verstuurd kunnen worden vanuit de service voor request, response en error-->
   <wsdl:message name="request">
     <wsdl:part name="parameters" element="req:request"/>
   </wsdl:message>

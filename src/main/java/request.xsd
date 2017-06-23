@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="http://eliaskarimi/request">
+	
+	<xs:annotation>
+		<xs:documentation xml:lang="nl">
+			De request .xsd. De client moet een country opgeven in string, en de jaar.
+			Omdat de onderstuende api van population.io waardes accepteerd tussen de 1950 en 2100,
+			zet ik deze als minimale en maximale waarde.
+			
+			Beide elementen mogen ook minimaal en maximaal 1 keer voorkomen.
+		</xs:documentation>
+	</xs:annotation>
+	
 	<!-- Element hier request -->
 	<xs:element name="request">
     	<xs:complexType>
         	<xs:sequence>
-           		<xs:element name="country" type="xs:string" minOccurs="1" maxOccurs="1"/>
+           		<xs:element name="country" type="xs:string" />
            		<xs:element name="year">
            			<xs:simpleType>
-           			<xs:restriction base="xs:integer">
-    				  <xs:minInclusive value="0"/>
-      					<xs:maxInclusive value="2017"/>
+           				<xs:restriction base="xs:integer">
+    				  		<xs:minInclusive value="1950"/>
+      						<xs:maxInclusive value="2100"/>
    					  </xs:restriction>
-   					  </xs:simpleType>
-           		</xs:element>
-           		
- 			</xs:sequence>
+   					</xs:simpleType>
+  			   </xs:element>
+  			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>

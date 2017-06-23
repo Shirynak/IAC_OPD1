@@ -19,6 +19,13 @@
             <artifactId>jaxws-rt</artifactId>
             <version>2.2.10</version>
         </dependency>
+        
+        <!-- Nodig voor json parsen -->
+        <dependency>
+    		<groupId>com.googlecode.json-simple</groupId>
+    		<artifactId>json-simple</artifactId>
+    		<version>1.1.1</version>
+		</dependency>
     </dependencies>
   
   <build>
@@ -28,9 +35,8 @@
     
     
     <plugins>
-     	<!-- Tomcat plugin -->  
+      <!-- Tomcat plugin weer weggehaald, werkte niet? -->  
       
-	
 	  <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.6.0</version>
