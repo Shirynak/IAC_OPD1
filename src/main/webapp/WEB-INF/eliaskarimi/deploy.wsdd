@@ -1,0 +1,50 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from eliaskarimi.SoapService WSDL service -->
+
+  <service name="WS-Port" provider="java:RPC" style="document" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://eliaskarimi/"/>
+      <parameter name="wsdlServiceElement" value="eliaskarimi.SoapService"/>
+      <parameter name="schemaUnqualified" value="http://eliaskarimi/error,http://eliaskarimi/request,http://eliaskarimi/response"/>
+      <parameter name="wsdlServicePort" value="WS-Port"/>
+      <parameter name="className" value="eliaskarimi.WSBindingSkeleton"/>
+      <parameter name="wsdlPortType" value="WS-Interface"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <parameter name="allowedMethods" value="*"/>
+
+      <typeMapping
+        xmlns:ns="http://eliaskarimi/error"
+        qname="ns:>ApplicationError"
+        type="java:eliaskarimi.error.ApplicationError"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://eliaskarimi/response"
+        qname="ns:>response"
+        type="java:eliaskarimi.response.Response"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://eliaskarimi/request"
+        qname="ns:>request"
+        type="java:eliaskarimi.request.Request"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

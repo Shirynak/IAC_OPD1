@@ -5,7 +5,16 @@
 	<xs:element name="request">
     	<xs:complexType>
         	<xs:sequence>
-           		<xs:element name="district" type="xs:string"/>
+           		<xs:element name="country" type="xs:string" minOccurs="1" maxOccurs="1"/>
+           		<xs:element name="year">
+           			<xs:simpleType>
+           			<xs:restriction base="xs:integer">
+    				  <xs:minInclusive value="0"/>
+      					<xs:maxInclusive value="2017"/>
+   					  </xs:restriction>
+   					  </xs:simpleType>
+           		</xs:element>
+           		
  			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

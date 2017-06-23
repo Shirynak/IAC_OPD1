@@ -5,7 +5,7 @@
     <xs:element name="response">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="result" type="xs:string"/>
+            	<xs:element name="result" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
