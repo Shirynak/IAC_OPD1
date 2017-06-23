@@ -150,7 +150,6 @@ public class CitizensByDistrictImpl implements WSInterface{
             
             String output;
             String jsonResult = "";
-            System.out.println("Output from Server .... \n");
 
             // Output omzetten naar response, zolang we nog niet bij het einde zijn
             while (null != (output = buffer.readLine()) ) {
@@ -161,7 +160,7 @@ public class CitizensByDistrictImpl implements WSInterface{
             JSONArray countries = (JSONArray) ((JSONObject)parser.parse(jsonResult)).get("countries");
             
             if(countries.contains(val)) {
-            	 System.out.println("found!: " + val);
+            	
             	return true;
             }
              
